@@ -8,13 +8,13 @@
 python3 -m streamlit run app.py
 ```
 
-Gemini API キーが必要です。`.env` ファイル（`GEMINI_API_KEY=...`）に設定するか、起動後にサイドバーから入力してください。
+API キーが必要です（**Gemini または Anthropic Claude**）。`.env`（`GEMINI_API_KEY=...` または `ANTHROPIC_API_KEY=...`）、`.streamlit/secrets.toml`、または起動後にサイドバーから入力。
 
 ## アーキテクチャ
 
 シングルページの Streamlit アプリ。`app.py` がサイドバー（API キーの初期化とツール選択）を管理し、各ツールモジュールにレンダリングを委譲します。各ツールは `tools/` 配下の Python ファイルで、Streamlit UI の構築と `utils/gemini.generate()` の呼び出しを行う `render()` 関数を持ちます。
 
-**Gemini クライアント** (`utils/gemini.py`): モジュールレベルのシングルトン。API キーが確定した後、`app.py` 内で `init_model()` を一度呼び出す必要があります。その後、各ツールから `generate()` が使えます。デフォルトモデルは `gemini-2.0-flash`。
+**LLM クライアント** (`utils/gemini.py`): モジュールレベルのシングルトン。**Gemini と Claude の両対応**で、キーの先頭で自動判別（`sk-ant-...` → Anthropic、それ以外 → Gemini）。API キー確定後に `app.py` で `init_model(api_key, model_name)` を一度呼び、各ツールは `generate(prompt)` を呼ぶ（プロバイダは透過）。デフォルトモデルは Gemini=`gemini-2.5-flash` / Claude=`claude-opus-5`。`detect_provider()` / `get_provider()` でプロバイダを判定。
 
 ### 記事生成パイプライン（`tools/blog_writer.py`）
 

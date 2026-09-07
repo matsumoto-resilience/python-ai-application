@@ -74,27 +74,35 @@ NO_API_TOOLS = {"保存済み記事"}
 # --- サイドバー ---
 with st.sidebar:
     st.title(":material/stylus: AI Writing")
-    st.caption("Powered by Gemini")
+    st.caption("Powered by Gemini / Claude")
     st.divider()
 
     # API キー設定（.env / Streamlit Secrets → なければ手入力）
     api_key_env = gemini_utils.get_api_key()
     if api_key_env:
         api_key = api_key_env
-        st.success("API キー: 設定から読み込み済み", icon=":material/check_circle:")
+        provider = gemini_utils.detect_provider(api_key)
+        label = "Anthropic Claude" if provider == "anthropic" else "Google Gemini"
+        st.success(f"API キー: 設定から読み込み済み（{label}）", icon=":material/check_circle:")
     else:
         api_key = st.text_input(
-            "Gemini API キー",
+            "API キー（Gemini または Claude）",
             type="password",
-            placeholder="AIza...",
-            help=".env ファイルに GEMINI_API_KEY を設定するか、ここに直接入力してください",
+            placeholder="AIza... または sk-ant-...",
+            help="Gemini（AIza...）または Anthropic Claude（sk-ant-...）のキーを入力。先頭で自動判別します。",
         )
 
     # APIキーがある場合のみモデル選択を表示
     if api_key:
+        provider = gemini_utils.detect_provider(api_key)
+        default_model = (
+            gemini_utils.DEFAULT_ANTHROPIC_MODEL
+            if provider == "anthropic"
+            else gemini_utils.DEFAULT_GEMINI_MODEL
+        )
         try:
             # モデル一覧取得のための仮初期化
-            gemini_utils.init_model(api_key=api_key, model_name="gemini-2.5-flash")
+            gemini_utils.init_model(api_key=api_key, model_name=default_model)
             available_models = gemini_utils.list_available_models()
             if not api_key_env:
                 st.success("API キーを設定しました", icon=":material/check_circle:")
@@ -106,7 +114,7 @@ with st.sidebar:
             model_name = st.selectbox(
                 "使用モデル",
                 available_models,
-                index=available_models.index("gemini-2.5-flash") if "gemini-2.5-flash" in available_models else 0,
+                index=available_models.index(default_model) if default_model in available_models else 0,
                 help="クォータ超過時は別モデルに切り替えてください",
             )
             # 選択されたモデルで初期化
@@ -129,7 +137,7 @@ with st.sidebar:
     )
 
     st.divider()
-    st.caption("入力したテキストは Google Gemini API（外部サービス）に送信されます。個人情報・機密情報の入力はお控えください。")
+    st.caption("入力したテキストは選択中の AI サービス（Google / Anthropic）に送信されます。個人情報・機密情報の入力はお控えください。")
     st.caption("© 2026 AI Writing Tool")
 
 # --- メインエリア ---
@@ -139,8 +147,9 @@ if selected_tool in NO_API_TOOLS:
 
 if not api_key:
     st.info(
-        "サイドバーから Gemini API キーを入力してください。\n\n"
-        "[Google AI Studio](https://aistudio.google.com/app/apikey) から無料で取得できます。",
+        "サイドバーから API キーを入力してください（Gemini または Claude）。\n\n"
+        "- Gemini: [Google AI Studio](https://aistudio.google.com/app/apikey)（無料枠あり）\n"
+        "- Claude: [Anthropic Console](https://console.anthropic.com/settings/keys)",
         icon=":material/vpn_key:",
     )
     st.stop()

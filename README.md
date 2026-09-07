@@ -10,9 +10,9 @@ Streamlit + Gemini API の日本語ライティング支援ツール。ブログ
 pip install -r requirements.txt
 ```
 
-API キーを次のいずれかで設定：
+API キーを次のいずれかで設定（**Gemini または Anthropic Claude**、キーの先頭で自動判別）：
 
-- `.env` ファイルに `GEMINI_API_KEY=...`
+- `.env` に `GEMINI_API_KEY=AIza...` または `ANTHROPIC_API_KEY=sk-ant-...`
 - `.streamlit/secrets.toml`（`.streamlit/secrets.toml.example` をコピー）
 - 起動後にサイドバーから直接入力
 
@@ -20,7 +20,7 @@ API キーを次のいずれかで設定：
 python3 -m streamlit run app.py
 ```
 
-キーは [Google AI Studio](https://aistudio.google.com/app/apikey) から無料で取得できます。
+キー取得: [Google AI Studio](https://aistudio.google.com/app/apikey)（無料枠あり） / [Anthropic Console](https://console.anthropic.com/settings/keys)
 
 ## Streamlit Community Cloud にデプロイ
 
@@ -30,8 +30,8 @@ python3 -m streamlit run app.py
 4. **Secrets** に以下を貼り付け（`.streamlit/secrets.toml.example` 参照）：
 
    ```toml
-   GEMINI_API_KEY = "AIza..."
-   # APP_PASSWORD = "..."   # 設定するとパスワード認証が有効になる
+   GEMINI_API_KEY = "AIza..."          # または ANTHROPIC_API_KEY = "sk-ant-..."
+   # APP_PASSWORD = "..."               # 設定するとパスワード認証が有効になる
    ```
 
 5. Deploy

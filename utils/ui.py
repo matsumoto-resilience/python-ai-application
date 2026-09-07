@@ -69,21 +69,30 @@ h3, h4 {{ font-weight:700 !important; }}
 .stMarkdown p, .stMarkdown li {{ color:#37414f; }}
 label p, [data-testid="stWidgetLabel"] p {{ font-weight:600 !important; color:var(--ink-2); }}
 
-/* --- アイコン：Ikonate 風の細いモノライン（Material Symbols の太さ軸を絞る） --- */
-[data-testid="stIconMaterial"],
-[data-testid="stAlertDynamicIcon"],
-[data-testid="stExpanderIconMaterial"],
-h1 span[translate="no"], h2 span[translate="no"], h3 span[translate="no"], h4 span[translate="no"],
-[data-testid="stMarkdownContainer"] span[translate="no"],
-section[data-testid="stSidebar"] div[role="radiogroup"] span[translate="no"],
-.stButton span[translate="no"], .stDownloadButton span[translate="no"] {{
-  font-variation-settings: 'FILL' 0, 'wght' 230, 'GRAD' -25, 'opsz' 24 !important;
+/* --- アイコン：見出し・サイドバーのナビだけ細いモノラインに（システムのアラート/状態アイコンは触らない） --- */
+[data-testid="stHeading"] span[translate="no"],
+[data-testid="stHeadingWithActionElements"] span[translate="no"],
+section[data-testid="stSidebar"] div[role="radiogroup"] span[translate="no"] {{
+  font-variation-settings: 'FILL' 0, 'wght' 300, 'opsz' 24 !important;
 }}
 /* 見出し内アイコンは少し小さめ＆余白 */
-h1 span[translate="no"], h2 span[translate="no"], h3 span[translate="no"] {{
-  font-size: 0.86em; margin-right: .12em; color: var(--blue); vertical-align: -0.06em;
+[data-testid="stHeading"] span[translate="no"],
+[data-testid="stHeadingWithActionElements"] span[translate="no"] {{
+  font-size: 0.86em; margin-right: .14em; color: var(--blue); vertical-align: -0.06em;
 }}
-section[data-testid="stSidebar"] div[role="radiogroup"] span[translate="no"] {{ font-size: 1.15rem; }}
+section[data-testid="stSidebar"] div[role="radiogroup"] span[translate="no"] {{ font-size: 1.1rem; }}
+
+/* --- 実行中インジケーター：Streamlit の「走る人」を消してシンプルな回転スピナーに --- */
+[data-testid="stStatusWidget"] img,
+[data-testid="stStatusWidget"] svg:first-child,
+[data-testid="stAppRunningIcon"] {{ display: none !important; }}
+[data-testid="stStatusWidget"] {{ display: flex; align-items: center; gap: 6px; }}
+[data-testid="stStatusWidget"]::before {{
+  content: ""; width: 13px; height: 13px; flex-shrink: 0;
+  border: 2px solid var(--blue-soft); border-top-color: var(--blue);
+  border-radius: 50%; animation: ai-spin .7s linear infinite;
+}}
+@keyframes ai-spin {{ to {{ transform: rotate(360deg); }} }}
 
 /* --- サイドバー --- */
 section[data-testid="stSidebar"] {{ background:#fff; border-right:1px solid var(--line); }}
