@@ -25,7 +25,7 @@ STYLES = {
 
 
 def render():
-    st.header("💡 タイトル・見出し生成")
+    st.header(":material/title: タイトル・見出し生成")
     st.caption("コンテンツのテーマから複数のタイトル案を一気に生成します")
 
     topic = st.text_area(
@@ -98,6 +98,6 @@ def render():
                 use_container_width=True,
             )
         with col_save:
-            if st.button("💾 保存", use_container_width=True):
+            if st.button("保存", icon=":material/save:", use_container_width=True):
                 history_utils.save_entry("タイトル・見出し生成", saved["title"], result)
                 st.success("保存しました！")

@@ -22,7 +22,7 @@ REPLY_TYPES = {
 
 
 def render():
-    st.header("📧 メール返信作成")
+    st.header(":material/mail: メール返信作成")
     st.caption("受信したメールを貼り付けるだけで、適切な返信文を生成します")
 
     received = st.text_area(
@@ -96,6 +96,6 @@ def render():
 
         col_save, _ = st.columns([1, 2])
         with col_save:
-            if st.button("💾 保存", use_container_width=True):
+            if st.button("保存", icon=":material/save:", use_container_width=True):
                 history_utils.save_entry("メール返信作成", saved["title"], result)
                 st.success("保存しました！")

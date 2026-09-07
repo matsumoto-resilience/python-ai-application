@@ -1,0 +1,208 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Zen+Maru+Gothic:wght@500;700&display=swap">
+  <style>
+    :root{
+      --bg:#f4f6fb; --card:#ffffff; --soft:#f6f8fc; --line:#e8ebf2; --line-2:#dee3ee;
+      --ink:#1e2431; --ink-2:#697386; --ink-3:#9aa2b1;
+      --blue:#4a7be5; --blue-dark:#3a63c8; --blue-soft:#e9f0fd; --blue-ink:#2f56b8;
+      --green:#2fb968; --green-soft:#e6f7ee;
+      /* chart categorical slots — validated (dataviz reference, first 3) */
+      --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a;
+      --grid:#e6e9f1; --axis:#c3c8d4; --muted:#8b93a3;
+      --shadow-sm:0 1px 2px rgba(30,41,59,.06),0 2px 8px rgba(30,41,59,.05);
+      --shadow-md:0 10px 34px rgba(40,56,100,.10);
+      --display:"Poppins","Zen Maru Gothic","Hiragino Maru Gothic ProN",system-ui,sans-serif;
+      --body:"Zen Kaku Gothic New","Hiragino Sans",system-ui,sans-serif;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);-webkit-font-smoothing:antialiased}
+    svg{display:block}
+
+    .app{width:1400px;min-height:1080px;background:var(--bg);display:flex}
+
+    .side{width:288px;flex-shrink:0;background:var(--card);border-right:1px solid var(--line);padding:26px 18px;display:flex;flex-direction:column;gap:22px}
+    .brand{display:flex;align-items:center;gap:12px;padding:0 6px}
+    .brand-mark{width:38px;height:38px;border-radius:11px;background:var(--blue);display:flex;align-items:center;justify-content:center;color:#fff;box-shadow:var(--shadow-sm)}
+    .brand-name{font-family:var(--display);font-weight:700;font-size:16px;color:var(--ink)}
+    .brand-sub{font-family:var(--body);font-size:11px;color:var(--ink-3);margin-top:2px}
+    .side-block{display:flex;flex-direction:column;gap:9px;padding:0 6px}
+    .row{display:flex;align-items:center;gap:8px}
+    .dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 3px var(--green-soft)}
+    .status-text{font-family:var(--body);font-size:12.5px;color:var(--ink-2)}
+    .model-chip{align-self:flex-start;font-family:var(--display);font-weight:500;font-size:11.5px;color:var(--ink-2);background:var(--soft);border:1px solid var(--line);border-radius:999px;padding:5px 12px;display:flex;gap:7px}
+    .model-chip span{color:var(--ink-3)}
+    .side-label{font-family:var(--display);font-weight:600;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);padding:0 12px}
+    .nav{display:flex;flex-direction:column;gap:3px;margin-top:8px}
+    .nav-item{display:grid;grid-template-columns:30px 1fr;align-items:center;gap:12px;padding:10px 12px;border-radius:12px;color:var(--ink-2)}
+    .nav-item .ic{width:30px;height:30px;border-radius:9px;background:var(--soft);display:flex;align-items:center;justify-content:center;color:var(--ink-3)}
+    .nav-item .lb{font-family:var(--display);font-weight:500;font-size:13.5px}
+    .nav-item:hover{background:var(--soft);color:var(--ink)}
+    .nav-item.is-active{background:var(--blue-soft);color:var(--blue-ink)}
+    .nav-item.is-active .ic{background:var(--blue);color:#fff}
+    .nav-item.is-active .lb{font-weight:600}
+    .side-foot{margin-top:auto;font-family:var(--body);font-size:10.5px;line-height:1.7;color:var(--ink-3);padding:0 12px}
+
+    .main{flex:1;padding:44px 56px 64px}
+    .wrap{max-width:960px;margin:0 auto;display:flex;flex-direction:column}
+    .pill{align-self:flex-start;font-family:var(--display);font-weight:600;font-size:11.5px;color:var(--blue-ink);background:var(--blue-soft);border-radius:999px;padding:6px 13px}
+    .h1{font-family:var(--display);font-weight:700;font-size:30px;line-height:1.25;color:var(--ink);margin:14px 0 0}
+    .lede{font-family:var(--body);font-size:13.5px;line-height:1.7;color:var(--ink-2);margin:8px 0 0}
+
+    .tiles{margin-top:26px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+    .tile{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow-sm);padding:18px 20px;display:flex;flex-direction:column;gap:5px}
+    .tile .t-l{font-family:var(--display);font-weight:600;font-size:11.5px;color:var(--ink-3)}
+    .tile .t-v{font-family:var(--display);font-weight:700;font-size:27px;color:var(--ink);line-height:1.1}
+    .tile .t-d{font-family:var(--display);font-weight:600;font-size:11px;color:#1e8f4e;display:flex;align-items:center;gap:4px}
+
+    .grid-2{margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow-md);padding:22px 24px}
+    .card.full{margin-top:16px}
+    .card-title{font-family:var(--display);font-weight:700;font-size:14px;color:var(--ink);margin:0 0 2px}
+    .card-sub{font-family:var(--body);font-size:11.5px;color:var(--ink-3);margin:0 0 14px}
+
+    .legend{display:flex;flex-direction:column;gap:9px;margin-top:4px}
+    .lg-row{display:flex;align-items:center;gap:9px;font-family:var(--body);font-size:12.5px;color:var(--ink-2)}
+    .lg-row .sw{width:10px;height:10px;border-radius:3px;flex-shrink:0}
+    .lg-row b{margin-left:auto;font-family:var(--display);font-weight:700;color:var(--ink)}
+    .lg-row span.pc{font-family:var(--display);font-weight:600;color:var(--ink-3);font-size:11px;width:38px;text-align:right}
+
+    .donut-wrap{display:flex;align-items:center;gap:22px}
+    .donut{position:relative;width:150px;height:150px;flex-shrink:0}
+    .donut .d-c{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+    .donut .d-v{font-family:var(--display);font-weight:700;font-size:26px;color:var(--ink);line-height:1}
+    .donut .d-l{font-family:var(--display);font-weight:600;font-size:10px;color:var(--ink-3);margin-top:2px}
+
+    .hbars{display:flex;flex-direction:column;gap:11px;margin-top:2px}
+    .hbar{display:flex;align-items:center;gap:12px}
+    .hbar .hl{width:120px;font-family:var(--body);font-size:12px;color:var(--ink-2);flex-shrink:0;text-align:right}
+    .hbar .ht{flex:1;height:14px;border-radius:5px;background:var(--soft);overflow:hidden}
+    .hbar .hf{display:block;height:100%;border-radius:5px;background:var(--blue)}
+    .hbar .hv{width:24px;font-family:var(--display);font-weight:700;font-size:12px;color:var(--ink);flex-shrink:0}
+
+    .axis-x{display:flex;justify-content:space-between;font-family:var(--body);font-size:10.5px;color:var(--muted);margin-top:8px}
+  </style>
+</helmet>
+
+<div class="app">
+  <aside class="side">
+    <div class="brand">
+      <div class="brand-mark"><svg width="19" height="19" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2.5l3.5 3.5-7.5 7.5H2.5v-3.5z"/><path d="M8.5 4l3.5 3.5"/></svg></div>
+      <div><div class="brand-name">AI Writing</div><div class="brand-sub">Powered by Gemini</div></div>
+    </div>
+
+    <div class="side-block">
+      <div class="row"><span class="dot"></span><span class="status-text">API 接続済み</span></div>
+      <div class="model-chip"><span>Model</span>gemini-2.5-flash</div>
+    </div>
+
+    <div>
+      <div class="side-label">ツール</div>
+      <nav class="nav">
+        <a class="nav-item"><span class="ic"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2.5l3.5 3.5-7.5 7.5H2.5v-3.5z"/><path d="M8.5 4l3.5 3.5"/></svg></span><span class="lb">ブログ記事作成</span></a>
+        <a class="nav-item"><span class="ic"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1.5" y="3" width="13" height="10" rx="2"/><path d="M2 4l6 4.5L14 4"/></svg></span><span class="lb">メール返信作成</span></a>
+        <a class="nav-item"><span class="ic"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h12M2 8h8M2 12h12"/></svg></span><span class="lb">文章要約</span></a>
+        <a class="nav-item"><span class="ic"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6"/><path d="M5.2 8.2l2 2 3.8-4.4"/></svg></span><span class="lb">文章校正・改善</span></a>
+        <a class="nav-item"><span class="ic"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 2l-1 12M10.5 2l-1 12M2.5 6h11M2 10h11"/></svg></span><span class="lb">SNS投稿文作成</span></a>
+        <a class="nav-item"><span class="ic"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 3v10M10.5 3v10M3.5 8h7"/></svg></span><span class="lb">タイトル・見出し生成</span></a>
+        <a class="nav-item is-active"><span class="ic"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2.5h8v11l-4-2.75L4 13.5z"/></svg></span><span class="lb">保存済み記事</span></a>
+      </nav>
+    </div>
+
+    <div class="side-foot">入力内容は Google Gemini API（外部サービス）に送信されます。<br>© 2026 AI Writing Tool</div>
+  </aside>
+
+  <main class="main">
+    <div class="wrap">
+      <span class="pill">品質と履歴</span>
+      <h1 class="h1">ダッシュボード</h1>
+      <p class="lede">生成した記事の品質スコアとフィードバックの傾向をまとめて確認できます。</p>
+
+      <div class="tiles">
+        <div class="tile"><span class="t-l">総生成数</span><span class="t-v">128</span><span class="t-d"><svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 12.5V4M4 7.5L8 3.5l4 4"/></svg>今週 +12</span></div>
+        <div class="tile"><span class="t-l">平均スコア</span><span class="t-v">84</span><span class="t-d"><svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 12.5V4M4 7.5L8 3.5l4 4"/></svg>+3</span></div>
+        <div class="tile"><span class="t-l">採用率</span><span class="t-v">74%</span><span class="t-d"><svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 12.5V4M4 7.5L8 3.5l4 4"/></svg>+5pt</span></div>
+        <div class="tile"><span class="t-l">蓄積ログ</span><span class="t-v">42<span style="font-size:14px;font-weight:600;color:var(--ink-3)"> 件</span></span><span class="t-d" style="color:var(--ink-3)">Few-Shot に使用</span></div>
+      </div>
+
+      <div class="card full">
+        <h4 class="card-title">ガードレールスコアの推移</h4>
+        <p class="card-sub">直近12回の生成 · 0〜100</p>
+        <svg width="100%" viewBox="0 0 900 240" preserveAspectRatio="none" fill="none" font-family="Zen Kaku Gothic New, sans-serif">
+          <line x1="48" y1="30" x2="880" y2="30" stroke="#e6e9f1" stroke-width="1"/>
+          <line x1="48" y1="82.5" x2="880" y2="82.5" stroke="#e6e9f1" stroke-width="1"/>
+          <line x1="48" y1="135" x2="880" y2="135" stroke="#e6e9f1" stroke-width="1"/>
+          <line x1="48" y1="187.5" x2="880" y2="187.5" stroke="#e6e9f1" stroke-width="1"/>
+          <line x1="48" y1="200" x2="880" y2="200" stroke="#c3c8d4" stroke-width="1"/>
+          <text x="38" y="34" text-anchor="end" font-size="11" fill="#8b93a3">100</text>
+          <text x="38" y="139" text-anchor="end" font-size="11" fill="#8b93a3">50</text>
+          <text x="38" y="204" text-anchor="end" font-size="11" fill="#8b93a3">0</text>
+          <path d="M64,116 L138,127 L212,102 L286,88 L360,105 L434,78 L508,84 L582,60 L656,71 L730,53 L804,63 L878,53 L878,200 L64,200 Z" fill="#4a7be5" fill-opacity="0.10"/>
+          <polyline points="64,116 138,127 212,102 286,88 360,105 434,78 508,84 582,60 656,71 730,53 804,63 878,53" stroke="#4a7be5" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="64" cy="116" r="3.2" fill="#fff" stroke="#4a7be5" stroke-width="2"/>
+          <circle cx="138" cy="127" r="3.2" fill="#fff" stroke="#4a7be5" stroke-width="2"/>
+          <circle cx="212" cy="102" r="3.2" fill="#fff" stroke="#4a7be5" stroke-width="2"/>
+          <circle cx="286" cy="88" r="3.2" fill="#fff" stroke="#4a7be5" stroke-width="2"/>
+          <circle cx="360" cy="105" r="3.2" fill="#fff" stroke="#4a7be5" stroke-width="2"/>
+          <circle cx="434" cy="78" r="3.2" fill="#fff" stroke="#4a7be5" stroke-width="2"/>
+          <circle cx="508" cy="84" r="3.2" fill="#fff" stroke="#4a7be5" stroke-width="2"/>
+          <circle cx="582" cy="60" r="3.2" fill="#fff" stroke="#4a7be5" stroke-width="2"/>
+          <circle cx="656" cy="71" r="3.2" fill="#fff" stroke="#4a7be5" stroke-width="2"/>
+          <circle cx="730" cy="53" r="3.2" fill="#fff" stroke="#4a7be5" stroke-width="2"/>
+          <circle cx="804" cy="63" r="3.2" fill="#fff" stroke="#4a7be5" stroke-width="2"/>
+          <circle cx="878" cy="53" r="4.4" fill="#4a7be5" stroke="#fff" stroke-width="2"/>
+          <text x="878" y="40" text-anchor="end" font-size="12" font-weight="700" fill="#1e2431" font-family="Poppins, sans-serif">88</text>
+        </svg>
+        <div class="axis-x"><span>12回前</span><span>9回前</span><span>6回前</span><span>3回前</span><span>最新</span></div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <h4 class="card-title">フィードバック内訳</h4>
+          <p class="card-sub">これまでの 採用 / ボツ / 編集の回数</p>
+          <div class="donut-wrap">
+            <div class="donut">
+              <svg width="150" height="150" viewBox="0 0 150 150" fill="none">
+                <circle cx="75" cy="75" r="52" stroke="#f0f2f7" stroke-width="16"/>
+                <circle cx="75" cy="75" r="52" stroke="#2a78d6" stroke-width="16" stroke-dasharray="144 182.7" stroke-dashoffset="0" transform="rotate(-90 75 75)"/>
+                <circle cx="75" cy="75" r="52" stroke="#eb6834" stroke-width="16" stroke-dasharray="49 277.7" stroke-dashoffset="-146.7" transform="rotate(-90 75 75)"/>
+                <circle cx="75" cy="75" r="52" stroke="#1baf7a" stroke-width="16" stroke-dasharray="125 201.7" stroke-dashoffset="-198.7" transform="rotate(-90 75 75)"/>
+              </svg>
+              <div class="d-c"><span class="d-v">69</span><span class="d-l">件</span></div>
+            </div>
+            <div class="legend">
+              <div class="lg-row"><span class="sw" style="background:#2a78d6"></span>採用 <span class="pc">45%</span><b>31</b></div>
+              <div class="lg-row"><span class="sw" style="background:#eb6834"></span>ボツ <span class="pc">16%</span><b>11</b></div>
+              <div class="lg-row"><span class="sw" style="background:#1baf7a"></span>編集のみ <span class="pc">39%</span><b>27</b></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h4 class="card-title">ツール別 生成数</h4>
+          <p class="card-sub">累計 128 件の内訳</p>
+          <div class="hbars">
+            <div class="hbar"><span class="hl">ブログ記事</span><span class="ht"><span class="hf" style="width:100%"></span></span><span class="hv">48</span></div>
+            <div class="hbar"><span class="hl">メール返信</span><span class="ht"><span class="hf" style="width:46%"></span></span><span class="hv">22</span></div>
+            <div class="hbar"><span class="hl">文章要約</span><span class="ht"><span class="hf" style="width:40%"></span></span><span class="hv">19</span></div>
+            <div class="hbar"><span class="hl">文章校正</span><span class="ht"><span class="hf" style="width:31%"></span></span><span class="hv">15</span></div>
+            <div class="hbar"><span class="hl">SNS投稿</span><span class="ht"><span class="hf" style="width:25%"></span></span><span class="hv">12</span></div>
+            <div class="hbar"><span class="hl">タイトル生成</span><span class="ht"><span class="hf" style="width:17%"></span></span><span class="hv">8</span></div>
+            <div class="hbar"><span class="hl">保存記事</span><span class="ht"><span class="hf" style="width:8%"></span></span><span class="hv">4</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+</x-dc>
+</body>
+</html>

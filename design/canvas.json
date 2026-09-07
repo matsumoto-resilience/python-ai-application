@@ -1,0 +1,12 @@
+{
+  "artboards": [
+    { "file": "Main.dc.html", "x": 0, "y": 0, "w": 1400, "h": 2080 },
+    { "file": "Summary.dc.html", "x": 1540, "y": 0, "w": 1400, "h": 1300 },
+    { "file": "Components.dc.html", "x": 1540, "y": 1450, "w": 1300, "h": 1560 },
+    { "file": "Dashboard.dc.html", "x": 0, "y": 2240, "w": 1400, "h": 1080 }
+  ],
+  "annotations": [
+    { "id": "note-brief", "x": 0, "y": -128, "w": 480, "text": "参考スクショの明るい方向。白基調 + ブルー1色プライマリ、大きめの角丸カード、やわらかいソフトシャドウ。見出しは丸ゴシック（Poppins / Zen Maru Gothic）、本文は Zen Kaku Gothic New。\nMain = ブログ記事作成（3段階パイプライン + 品質スコアの図 + 学習ログ）。Dashboard = スコア推移の折れ線・フィードバック内訳のドーナツ・ツール別の棒グラフ。" }
+  ],
+  "launch": { "view": "canvas" }
+}

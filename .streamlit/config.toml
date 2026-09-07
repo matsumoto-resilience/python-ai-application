@@ -1,0 +1,16 @@
+# AI ライティングツール — 明るいクリーン方向のテーマ
+# 参考: ai-writing-redesign.html（白基調 + ブルー1色 + 角丸 + ソフトシャドウ）
+
+[theme]
+base = "light"
+primaryColor = "#4a7be5"
+backgroundColor = "#ffffff"
+secondaryBackgroundColor = "#f4f6fb"
+textColor = "#1e2431"
+linkColor = "#3a63c8"
+borderColor = "#e8ebf2"
+showWidgetBorder = true
+baseRadius = "0.8rem"
+font = "'Noto Sans JP', 'Hiragino Kaku Gothic ProN', sans-serif"
+headingFont = "'Poppins', 'Noto Sans JP', sans-serif"
+codeFont = "'SFMono-Regular', 'Menlo', monospace"

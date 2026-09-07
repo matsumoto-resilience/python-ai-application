@@ -9,9 +9,26 @@ load_dotenv()
 _model = None
 
 
+def get_api_key() -> str:
+    """API キーを 環境変数(.env) → Streamlit Secrets の順で探す。
+
+    Streamlit Community Cloud では .env が使えないため、
+    [App settings] → [Secrets] の GEMINI_API_KEY を読む。
+    """
+    key = os.getenv("GEMINI_API_KEY", "")
+    if key:
+        return key
+    try:
+        import streamlit as st
+
+        return str(st.secrets.get("GEMINI_API_KEY", "") or "")
+    except Exception:
+        return ""
+
+
 def init_model(api_key: str | None = None, model_name: str = "gemini-2.5-flash") -> genai.GenerativeModel:
     global _model
-    key = api_key or os.getenv("GEMINI_API_KEY", "")
+    key = api_key or get_api_key()
     if not key:
         raise ValueError("GEMINI_API_KEY が設定されていません")
     genai.configure(api_key=key)

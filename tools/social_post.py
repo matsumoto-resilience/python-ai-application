@@ -37,7 +37,7 @@ GOALS = {
 
 
 def render():
-    st.header("📱 SNS投稿文作成")
+    st.header(":material/tag: SNS投稿文作成")
     st.caption("各SNSの特性に合わせた投稿文を生成します")
 
     topic = st.text_area(
@@ -116,6 +116,6 @@ def render():
                 use_container_width=True,
             )
         with col_save:
-            if st.button("💾 保存", use_container_width=True):
+            if st.button("保存", icon=":material/save:", use_container_width=True):
                 history_utils.save_entry("SNS投稿文作成", saved["title"], result)
                 st.success("保存しました！")

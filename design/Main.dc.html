@@ -1,0 +1,283 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Zen+Maru+Gothic:wght@500;700&display=swap">
+  <style>
+    :root{
+      --bg:#f4f6fb; --card:#ffffff; --soft:#f6f8fc; --line:#e8ebf2; --line-2:#dee3ee;
+      --ink:#1e2431; --ink-2:#697386; --ink-3:#9aa2b1;
+      --blue:#4a7be5; --blue-dark:#3a63c8; --blue-soft:#e9f0fd; --blue-ink:#2f56b8;
+      --green:#2fb968; --green-soft:#e6f7ee;
+      --amber:#efa63c; --amber-soft:#fdf1de; --coral:#f2685f;
+      --shadow-sm:0 1px 2px rgba(30,41,59,.06),0 2px 8px rgba(30,41,59,.05);
+      --shadow-md:0 10px 34px rgba(40,56,100,.10);
+      --display:"Poppins","Zen Maru Gothic","Hiragino Maru Gothic ProN",system-ui,sans-serif;
+      --body:"Zen Kaku Gothic New","Hiragino Sans",system-ui,sans-serif;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);-webkit-font-smoothing:antialiased}
+    svg{display:block}
+    a{color:var(--blue);text-decoration:none}
+    a:hover{color:var(--blue-dark)}
+
+    .app{width:1400px;min-height:2080px;background:var(--bg);display:flex}
+
+    /* sidebar */
+    .side{width:288px;flex-shrink:0;background:var(--card);border-right:1px solid var(--line);padding:26px 18px;display:flex;flex-direction:column;gap:22px}
+    .brand{display:flex;align-items:center;gap:12px;padding:0 6px}
+    .brand-mark{width:38px;height:38px;border-radius:11px;background:var(--blue);display:flex;align-items:center;justify-content:center;color:#fff;box-shadow:var(--shadow-sm)}
+    .brand-name{font-family:var(--display);font-weight:700;font-size:16px;color:var(--ink);letter-spacing:.01em}
+    .brand-sub{font-family:var(--body);font-size:11px;color:var(--ink-3);margin-top:2px}
+    .side-block{display:flex;flex-direction:column;gap:9px;padding:0 6px}
+    .row{display:flex;align-items:center;gap:8px}
+    .dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 3px var(--green-soft)}
+    .status-text{font-family:var(--body);font-size:12.5px;color:var(--ink-2)}
+    .model-chip{align-self:flex-start;font-family:var(--display);font-weight:500;font-size:11.5px;color:var(--ink-2);background:var(--soft);border:1px solid var(--line);border-radius:999px;padding:5px 12px;display:flex;gap:7px}
+    .model-chip span{color:var(--ink-3)}
+    .side-label{font-family:var(--display);font-weight:600;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);padding:0 12px}
+    .nav{display:flex;flex-direction:column;gap:3px}
+    .nav-item{display:grid;grid-template-columns:30px 1fr;align-items:center;gap:12px;padding:10px 12px;border-radius:12px;color:var(--ink-2)}
+    .nav-item .ic{width:30px;height:30px;border-radius:9px;background:var(--soft);display:flex;align-items:center;justify-content:center;color:var(--ink-3)}
+    .nav-item .lb{font-family:var(--display);font-weight:500;font-size:13.5px}
+    .nav-item:hover{background:var(--soft);color:var(--ink)}
+    .nav-item.is-active{background:var(--blue-soft);color:var(--blue-ink)}
+    .nav-item.is-active .ic{background:var(--blue);color:#fff}
+    .nav-item.is-active .lb{font-weight:600}
+    .side-foot{margin-top:auto;font-family:var(--body);font-size:10.5px;line-height:1.7;color:var(--ink-3);padding:0 12px}
+
+    /* main */
+    .main{flex:1;padding:44px 60px 72px}
+    .wrap{max-width:840px;margin:0 auto;display:flex;flex-direction:column}
+    .pill{align-self:flex-start;font-family:var(--display);font-weight:600;font-size:11.5px;color:var(--blue-ink);background:var(--blue-soft);border-radius:999px;padding:6px 13px}
+    .h1{font-family:var(--display);font-weight:700;font-size:32px;line-height:1.25;color:var(--ink);margin:14px 0 0}
+    .lede{font-family:var(--body);font-size:14px;line-height:1.75;color:var(--ink-2);margin:10px 0 0;max-width:60ch;text-wrap:pretty}
+
+    .card{background:var(--card);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow-md);padding:26px}
+    .form{margin-top:28px;display:flex;flex-direction:column;gap:18px}
+    .grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+    .label{display:block;font-family:var(--display);font-size:12px;font-weight:600;color:var(--ink-2);margin-bottom:7px}
+    .label.inline{margin:0}
+    .field{width:100%;background:var(--soft);border:1px solid var(--line-2);border-radius:12px;padding:12px 14px;color:var(--ink);font-family:var(--body);font-size:13.5px;line-height:1.5}
+    .field.ph{color:var(--ink-3)}
+    .field.select{display:flex;align-items:center;justify-content:space-between}
+    .field.select svg{color:var(--ink-3)}
+    .field.focus{background:#fff;border-color:var(--blue);box-shadow:0 0 0 4px rgba(74,123,229,.14)}
+    .field.area{min-height:60px;color:var(--ink-3)}
+    .opts{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-top:2px;flex-wrap:wrap}
+    .check{display:flex;align-items:center;gap:10px;font-family:var(--body);font-size:12.5px;color:var(--ink-2)}
+    .check .box{width:18px;height:18px;border:1.5px solid var(--line-2);border-radius:6px;display:flex;align-items:center;justify-content:center;color:transparent;flex-shrink:0}
+    .check .box.on{background:var(--blue);border-color:var(--blue);color:#fff}
+    .seg-wrap{display:flex;align-items:center;gap:10px}
+    .seg{display:flex;background:var(--soft);border:1px solid var(--line-2);border-radius:10px;padding:3px}
+    .seg b{font-family:var(--display);font-size:12px;font-weight:500;color:var(--ink-2);padding:6px 12px;border-radius:8px}
+    .seg b.on{background:var(--blue);color:#fff;font-weight:600}
+
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:44px;padding:0 18px;border-radius:13px;font-family:var(--display);font-size:13.5px;font-weight:600;border:1px solid transparent;cursor:default}
+    .btn-primary{background:var(--blue);color:#fff;width:100%;height:50px;font-size:14.5px;box-shadow:0 8px 20px rgba(74,123,229,.28)}
+    .btn-ghost{background:#fff;border-color:var(--line-2);color:var(--ink-2)}
+    .btn-adopt{background:var(--green-soft);border-color:rgba(47,185,104,.35);color:#1e8f4e}
+    .btn-reject{background:#fff;border-color:var(--line-2);color:var(--ink-2)}
+
+    .result{margin-top:30px;display:flex;flex-direction:column;gap:16px}
+
+    .score{display:flex;gap:30px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow-md);padding:24px 28px}
+    .gauge{flex-shrink:0;position:relative;width:148px;height:148px}
+    .gauge .g-num{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+    .gauge .g-v{font-family:var(--display);font-weight:700;font-size:33px;color:var(--ink);line-height:1}
+    .gauge .g-l{font-family:var(--display);font-weight:600;font-size:10px;color:var(--ink-3);margin-top:4px;letter-spacing:.04em}
+    .score-body{flex:1;display:flex;flex-direction:column;gap:13px}
+    .score-head{display:flex;align-items:center;gap:10px}
+    .score-head h4{font-family:var(--display);font-weight:700;font-size:14px;margin:0;color:var(--ink)}
+    .chk-pill{display:inline-flex;align-items:center;gap:6px;background:var(--green-soft);color:#1e8f4e;font-family:var(--display);font-weight:600;font-size:11px;border-radius:999px;padding:4px 11px}
+    .bar-row{display:flex;align-items:center;gap:12px}
+    .bar-row .bl{width:104px;font-family:var(--body);font-size:12px;color:var(--ink-2);flex-shrink:0}
+    .bar-row .bt{flex:1;height:8px;border-radius:4px;background:var(--blue-soft);overflow:hidden}
+    .bar-row .bf{display:block;height:100%;border-radius:4px;background:var(--blue)}
+    .bar-row .bv{width:26px;text-align:right;font-family:var(--display);font-weight:700;font-size:12px;color:var(--ink);flex-shrink:0}
+    .stepper{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow-sm);padding:16px 20px}
+    .step{display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:500;font-size:12.5px;color:var(--ink)}
+    .step .sn{width:24px;height:24px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700}
+    .sep{flex:1;height:2px;border-radius:2px;background:var(--blue-soft)}
+    .disc{display:flex;align-items:center;justify-content:space-between;padding:15px 18px;background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow-sm);color:var(--ink-2);font-family:var(--display);font-weight:500;font-size:13px}
+    .disc svg{color:var(--ink-3)}
+
+    .final-label{margin-top:8px;display:flex;align-items:center;gap:8px;font-family:var(--display);font-weight:700;font-size:13px;color:var(--ink)}
+    .final-label .tick{width:20px;height:20px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center}
+    .article{background:var(--card);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow-md);padding:32px 36px;margin-top:10px}
+    .art-title{font-family:var(--display);font-weight:700;font-size:23px;line-height:1.5;color:var(--ink);margin:0 0 16px;text-wrap:pretty}
+    .article p{font-family:var(--body);font-size:14.5px;line-height:1.95;color:#3b4251;margin:0 0 14px}
+    .art-h2{display:flex;align-items:center;gap:11px;margin:24px 0 12px}
+    .art-h2 .n{width:26px;height:26px;border-radius:8px;background:var(--blue-soft);color:var(--blue-ink);display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:700;font-size:12px;flex-shrink:0}
+    .art-h2 h3{font-family:var(--display);font-weight:600;font-size:17px;color:var(--ink);margin:0}
+    .art-more{color:var(--blue);font-family:var(--display);font-weight:600;font-size:13px;margin:2px 0 0}
+
+    .actions{display:flex;gap:10px;flex-wrap:wrap}
+    .fb{margin-top:8px;display:flex;flex-direction:column;gap:14px;background:var(--soft);border:1px solid var(--line);box-shadow:none}
+    .fb-head{display:flex;align-items:center;gap:9px}
+    .fb-head h4{font-family:var(--display);font-weight:700;font-size:14px;color:var(--ink);margin:0}
+    .fb-head .tag{font-family:var(--display);font-weight:600;font-size:10.5px;color:var(--blue-ink);background:var(--blue-soft);border-radius:999px;padding:3px 9px}
+    .fb-note{font-family:var(--body);font-size:12px;line-height:1.7;color:var(--ink-3);margin:0}
+    .fb-edit{min-height:100px;background:#fff;border:1px solid var(--line-2);border-radius:12px;padding:13px 15px;font-family:var(--body);font-size:13.5px;line-height:1.85;color:var(--ink-2)}
+    .fb-actions{display:flex;gap:10px}
+    .meta{font-family:var(--body);font-size:11px;color:var(--ink-3)}
+  </style>
+</helmet>
+
+<div class="app">
+  <aside class="side">
+    <div class="brand">
+      <div class="brand-mark">
+        <svg width="19" height="19" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2.5l3.5 3.5-7.5 7.5H2.5v-3.5z"/><path d="M8.5 4l3.5 3.5"/></svg>
+      </div>
+      <div>
+        <div class="brand-name">AI Writing</div>
+        <div class="brand-sub">Powered by Gemini</div>
+      </div>
+    </div>
+
+    <div class="side-block">
+      <div class="row"><span class="dot"></span><span class="status-text">API 接続済み</span></div>
+      <div class="model-chip"><span>Model</span>gemini-2.5-flash</div>
+    </div>
+
+    <div>
+      <div class="side-label">ツール</div>
+      <nav class="nav" style="margin-top:8px">
+        <a class="nav-item is-active">
+          <span class="ic"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2.5l3.5 3.5-7.5 7.5H2.5v-3.5z"/><path d="M8.5 4l3.5 3.5"/></svg></span>
+          <span class="lb">ブログ記事作成</span>
+        </a>
+        <a class="nav-item">
+          <span class="ic"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1.5" y="3" width="13" height="10" rx="2"/><path d="M2 4l6 4.5L14 4"/></svg></span>
+          <span class="lb">メール返信作成</span>
+        </a>
+        <a class="nav-item">
+          <span class="ic"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h12M2 8h8M2 12h12"/></svg></span>
+          <span class="lb">文章要約</span>
+        </a>
+        <a class="nav-item">
+          <span class="ic"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6"/><path d="M5.2 8.2l2 2 3.8-4.4"/></svg></span>
+          <span class="lb">文章校正・改善</span>
+        </a>
+        <a class="nav-item">
+          <span class="ic"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 2l-1 12M10.5 2l-1 12M2.5 6h11M2 10h11"/></svg></span>
+          <span class="lb">SNS投稿文作成</span>
+        </a>
+        <a class="nav-item">
+          <span class="ic"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 3v10M10.5 3v10M3.5 8h7"/></svg></span>
+          <span class="lb">タイトル・見出し生成</span>
+        </a>
+        <a class="nav-item">
+          <span class="ic"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2.5h8v11l-4-2.75L4 13.5z"/></svg></span>
+          <span class="lb">保存済み記事</span>
+        </a>
+      </nav>
+    </div>
+
+    <div class="side-foot">入力内容は Google Gemini API（外部サービス）に送信されます。<br>© 2026 AI Writing Tool</div>
+  </aside>
+
+  <main class="main">
+    <div class="wrap">
+      <span class="pill">3ステップ生成</span>
+      <h1 class="h1">ブログ記事作成</h1>
+      <p class="lede">Planner → Writer → Polisher の3段階で、"AI っぽさ" を抑えた記事を書き上げます。生成後はガードレールが品質を自動判定し、基準に届かなければ再校正します。</p>
+
+      <section class="card form">
+        <div class="grid2">
+          <div><label class="label">記事タイトル / テーマ</label><div class="field">在宅ワークで集中力を保つ方法</div></div>
+          <div><label class="label">キーワード（カンマ区切り）</label><div class="field ph">在宅, 集中力, 習慣</div></div>
+        </div>
+        <div class="grid2">
+          <div><label class="label">文体・トーン</label><div class="field select">フレンドリー<svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 6l4.5 4.5L12.5 6"/></svg></div></div>
+          <div><label class="label">文章量</label><div class="field select">標準 (1000字程度)<svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 6l4.5 4.5L12.5 6"/></svg></div></div>
+        </div>
+        <div><label class="label">ターゲット読者</label><div class="field ph">在宅勤務を始めたばかりの会社員</div></div>
+        <div><label class="label">追加の指示・補足（任意）</label><div class="field area">SEO を意識しつつ、体験談を交えた構成にしてください</div></div>
+
+        <div class="opts">
+          <label class="check">
+            <span class="box on"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8l3 3 6-6.5"/></svg></span>
+            過去の採用例をお手本にする（Few-Shot RAG）
+          </label>
+          <div class="seg-wrap">
+            <span class="label inline">再校正</span>
+            <div class="seg"><b>0</b><b class="on">1</b><b>2</b><b>3</b></div>
+          </div>
+        </div>
+
+        <button class="btn btn-primary">記事を生成</button>
+      </section>
+
+      <div class="result">
+        <div class="score">
+          <div class="gauge">
+            <svg width="148" height="148" viewBox="0 0 148 148" fill="none">
+              <circle cx="74" cy="74" r="58" stroke="#e9f0fd" stroke-width="13"/>
+              <circle cx="74" cy="74" r="58" stroke="#4a7be5" stroke-width="13" stroke-linecap="round" stroke-dasharray="320.7 364.4" transform="rotate(-90 74 74)"/>
+            </svg>
+            <div class="g-num"><span class="g-v">88</span><span class="g-l">/ 100</span></div>
+          </div>
+          <div class="score-body">
+            <div class="score-head">
+              <h4>品質スコア</h4>
+              <span class="chk-pill"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8l3 3 6-6.5"/></svg>ガードレール合格</span>
+            </div>
+            <div class="bar-row"><span class="bl">AI感の低さ</span><span class="bt"><span class="bf" style="width:92%"></span></span><span class="bv">92</span></div>
+            <div class="bar-row"><span class="bl">読者への共感</span><span class="bt"><span class="bf" style="width:85%"></span></span><span class="bv">85</span></div>
+            <div class="bar-row"><span class="bl">具体性・体験談</span><span class="bt"><span class="bf" style="width:88%"></span></span><span class="bv">88</span></div>
+          </div>
+        </div>
+
+        <div class="stepper">
+          <div class="step"><span class="sn">1</span>構成・共感設計</div>
+          <div class="sep"></div>
+          <div class="step"><span class="sn">2</span>初稿作成</div>
+          <div class="sep"></div>
+          <div class="step"><span class="sn">3</span>脱 AI 校正</div>
+        </div>
+
+        <div class="disc"><span>① 構成・共感設計（Planner の出力）</span><svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 6l4.5 4.5L12.5 6"/></svg></div>
+        <div class="disc"><span>② 初稿（Writer の出力・校正前）</span><svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 6l4.5 4.5L12.5 6"/></svg></div>
+
+        <div class="final-label"><span class="tick"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8l3 3 6-6.5"/></svg></span>③ 完成稿</div>
+        <article class="article">
+          <h2 class="art-title">集中できない在宅ワーク、原因は「意志の弱さ」じゃなかった</h2>
+          <p>朝いちばんにパソコンを開いたはずなのに、気づけばもう昼。在宅ワークを始めてから、そんな日が増えていませんか。</p>
+          <div class="art-h2"><span class="n">01</span><h3>なぜ家だと集中が切れるのか</h3></div>
+          <p>私も最初のひと月は、一時間おきに冷蔵庫を開けていました。原因は気合ではなく「境界線のなさ」です。通勤という儀式が消えた分、脳が仕事モードに入るきっかけを失っています。</p>
+          <div class="art-h2"><span class="n">02</span><h3>15分だけ試したい3つの習慣</h3></div>
+          <p>まず、始業前に5分だけ外を歩く。次に、机の上に置くものを一つに絞る。最後に、45分作業したら必ず立ち上がる。タイマーが鳴ったら、進み具合に関係なく席を離れます。</p>
+          <p class="art-more">続きを表示</p>
+        </article>
+
+        <div class="actions">
+          <button class="btn btn-ghost">テキスト (.txt)</button>
+          <button class="btn btn-ghost">Word (.docx)</button>
+          <button class="btn btn-ghost">保存</button>
+        </div>
+
+        <section class="card fb">
+          <div class="fb-head"><h4>フィードバック</h4><span class="tag">学習用ログ</span></div>
+          <p class="fb-note">本文を手直しして「採用 / ボツ」を選ぶと、編集差分が logs/feedback.jsonl に保存され、次回以降のお手本になります。</p>
+          <div class="fb-edit">朝いちばんにパソコンを開いたはずなのに、気づけばもう昼。在宅ワークを始めてから、そんな日が増えていませんか。私も最初のひと月は、一時間おきに冷蔵庫を開けていました……</div>
+          <div class="fb-actions">
+            <button class="btn btn-adopt"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8l3 3 6-6.5"/></svg>採用</button>
+            <button class="btn btn-reject"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l8 8M12 4l-8 8"/></svg>ボツ</button>
+          </div>
+          <div class="meta">蓄積ログ 42 件　·　採用 31　/　ボツ 11　·　編集あり 27</div>
+        </section>
+      </div>
+    </div>
+  </main>
+</div>
+</x-dc>
+</body>
+</html>

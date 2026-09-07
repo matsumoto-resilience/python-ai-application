@@ -1,0 +1,212 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Zen+Maru+Gothic:wght@500;700&display=swap">
+  <style>
+    :root{
+      --bg:#f4f6fb; --card:#ffffff; --soft:#f6f8fc; --line:#e8ebf2; --line-2:#dee3ee;
+      --ink:#1e2431; --ink-2:#697386; --ink-3:#9aa2b1;
+      --blue:#4a7be5; --blue-dark:#3a63c8; --blue-soft:#e9f0fd; --blue-ink:#2f56b8;
+      --green:#2fb968; --green-soft:#e6f7ee;
+      --amber:#efa63c; --amber-soft:#fdf1de; --coral:#f2685f; --purple:#8b6ff2;
+      --shadow-sm:0 1px 2px rgba(30,41,59,.06),0 2px 8px rgba(30,41,59,.05);
+      --shadow-md:0 10px 34px rgba(40,56,100,.10);
+      --display:"Poppins","Zen Maru Gothic","Hiragino Maru Gothic ProN",system-ui,sans-serif;
+      --body:"Zen Kaku Gothic New","Hiragino Sans",system-ui,sans-serif;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);-webkit-font-smoothing:antialiased}
+    svg{display:block}
+
+    .sheet{width:1300px;min-height:1560px;background:var(--bg);padding:52px 60px 72px;display:flex;flex-direction:column;gap:40px}
+    .head{display:flex;flex-direction:column;gap:8px}
+    .pill{align-self:flex-start;font-family:var(--display);font-weight:600;font-size:11.5px;color:var(--blue-ink);background:var(--blue-soft);border-radius:999px;padding:6px 13px}
+    .title{font-family:var(--display);font-weight:700;font-size:28px;color:var(--ink);margin:0}
+
+    .sec{display:flex;flex-direction:column;gap:16px}
+    .sec-label{font-family:var(--display);font-weight:700;font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-3)}
+
+    .swatches{display:grid;grid-template-columns:repeat(6,1fr);gap:14px}
+    .sw{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--card);box-shadow:var(--shadow-sm)}
+    .sw .chip{height:60px}
+    .sw .cap{padding:8px 11px;display:flex;flex-direction:column;gap:1px}
+    .sw .nm{font-family:var(--display);font-weight:600;font-size:11px;color:var(--ink-2)}
+    .sw .hex{font-family:var(--body);font-size:10px;color:var(--ink-3)}
+
+    .type-card{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow-sm);padding:22px 24px;display:flex;flex-direction:column;gap:16px}
+    .type-row{display:flex;flex-direction:column;gap:5px;border-bottom:1px solid var(--line);padding-bottom:14px}
+    .type-row:last-child{border-bottom:0;padding-bottom:0}
+    .type-row .k{font-family:var(--display);font-weight:600;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3)}
+    .t-display{font-family:var(--display);font-weight:700;font-size:30px;color:var(--ink)}
+    .t-head{font-family:var(--display);font-weight:600;font-size:19px;color:var(--ink)}
+    .t-body{font-family:var(--body);font-size:14px;line-height:1.85;color:#3b4251}
+    .t-cap{font-family:var(--body);font-size:12px;color:var(--ink-3)}
+
+    .row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:44px;padding:0 20px;border-radius:13px;font-family:var(--display);font-size:13.5px;font-weight:600;border:1px solid transparent}
+    .btn-primary{background:var(--blue);color:#fff;box-shadow:0 8px 20px rgba(74,123,229,.28)}
+    .btn-ghost{background:#fff;border-color:var(--line-2);color:var(--ink-2)}
+    .btn-adopt{background:var(--green-soft);border-color:rgba(47,185,104,.35);color:#1e8f4e}
+    .btn-reject{background:#fff;border-color:var(--line-2);color:var(--ink-2)}
+    .btn-disabled{background:var(--soft);border-color:var(--line);color:var(--ink-3)}
+
+    .fgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;max-width:760px}
+    .label{display:block;font-family:var(--display);font-size:12px;font-weight:600;color:var(--ink-2);margin-bottom:7px}
+    .field{width:100%;background:var(--soft);border:1px solid var(--line-2);border-radius:12px;padding:12px 14px;color:var(--ink);font-family:var(--body);font-size:13.5px}
+    .field.ph{color:var(--ink-3)}
+    .field.focus{background:#fff;border-color:var(--blue);box-shadow:0 0 0 4px rgba(74,123,229,.14)}
+    .field.select{display:flex;align-items:center;justify-content:space-between}
+    .field.select svg{color:var(--ink-3)}
+    .field.area{min-height:66px;color:var(--ink-3)}
+    .check{display:flex;align-items:center;gap:10px;font-family:var(--body);font-size:12.5px;color:var(--ink-2)}
+    .check .box{width:18px;height:18px;border:1.5px solid var(--line-2);border-radius:6px;display:flex;align-items:center;justify-content:center;color:transparent;flex-shrink:0}
+    .check .box.on{background:var(--blue);border-color:var(--blue);color:#fff}
+    .seg{display:flex;background:var(--soft);border:1px solid var(--line-2);border-radius:10px;padding:3px;width:max-content}
+    .seg b{font-family:var(--display);font-size:12px;font-weight:500;color:var(--ink-2);padding:7px 14px;border-radius:8px}
+    .seg b.on{background:var(--blue);color:#fff;font-weight:600}
+
+    .navset{display:flex;flex-direction:column;gap:4px;max-width:280px;background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow-sm);padding:10px}
+    .nav-item{display:grid;grid-template-columns:30px 1fr;align-items:center;gap:12px;padding:10px 12px;border-radius:12px;color:var(--ink-2)}
+    .nav-item .ic{width:30px;height:30px;border-radius:9px;background:var(--soft);display:flex;align-items:center;justify-content:center;color:var(--ink-3)}
+    .nav-item .lb{font-family:var(--display);font-weight:500;font-size:13.5px}
+    .nav-item.hover{background:var(--soft);color:var(--ink)}
+    .nav-item.is-active{background:var(--blue-soft);color:var(--blue-ink)}
+    .nav-item.is-active .ic{background:var(--blue);color:#fff}
+    .nav-item.is-active .lb{font-weight:600}
+
+    .badge-ok{display:inline-flex;align-items:center;gap:9px;background:var(--green-soft);color:#1e8f4e;padding:9px 16px;border-radius:999px;font-family:var(--display);font-weight:600;font-size:12.5px}
+    .badge-warn{display:inline-flex;align-items:center;gap:9px;background:var(--amber-soft);color:#b9791d;padding:9px 16px;border-radius:999px;font-family:var(--display);font-weight:600;font-size:12.5px}
+    .vlist{font-family:var(--body);font-size:12px;line-height:1.95;color:var(--ink-3);margin:10px 0 0}
+    .stepper{display:flex;align-items:center;gap:12px;max-width:560px;margin-top:6px;background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow-sm);padding:16px 20px}
+    .step{display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:500;font-size:12.5px;color:var(--ink)}
+    .step .sn{width:24px;height:24px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700}
+    .step.todo .sn{background:var(--blue-soft);color:var(--blue-ink)}
+    .sep{flex:1;height:2px;border-radius:2px;background:var(--blue-soft)}
+
+    .card-demo{display:flex;gap:16px;flex-wrap:wrap}
+    .mini{width:200px;background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow-md);padding:18px}
+    .mini h5{font-family:var(--display);font-weight:600;font-size:13px;color:var(--ink);margin:0 0 6px}
+    .mini p{font-family:var(--body);font-size:12px;line-height:1.7;color:var(--ink-3);margin:0}
+  </style>
+</helmet>
+
+<div class="sheet">
+  <div class="head">
+    <span class="pill">Design System</span>
+    <h1 class="title">コンポーネント &amp; トークン</h1>
+  </div>
+
+  <div class="sec">
+    <div class="sec-label">Palette — 白基調 + ブルーのプライマリ</div>
+    <div class="swatches">
+      <div class="sw"><div class="chip" style="background:#f4f6fb"></div><div class="cap"><span class="nm">bg</span><span class="hex">#F4F6FB</span></div></div>
+      <div class="sw"><div class="chip" style="background:#ffffff;border-bottom:1px solid #e8ebf2"></div><div class="cap"><span class="nm">card</span><span class="hex">#FFFFFF</span></div></div>
+      <div class="sw"><div class="chip" style="background:#f6f8fc"></div><div class="cap"><span class="nm">soft</span><span class="hex">#F6F8FC</span></div></div>
+      <div class="sw"><div class="chip" style="background:#4a7be5"></div><div class="cap"><span class="nm">blue</span><span class="hex">#4A7BE5</span></div></div>
+      <div class="sw"><div class="chip" style="background:#e9f0fd"></div><div class="cap"><span class="nm">blue-soft</span><span class="hex">#E9F0FD</span></div></div>
+      <div class="sw"><div class="chip" style="background:#1e2431"></div><div class="cap"><span class="nm">ink</span><span class="hex">#1E2431</span></div></div>
+      <div class="sw"><div class="chip" style="background:#697386"></div><div class="cap"><span class="nm">ink-2</span><span class="hex">#697386</span></div></div>
+      <div class="sw"><div class="chip" style="background:#2fb968"></div><div class="cap"><span class="nm">green</span><span class="hex">#2FB968</span></div></div>
+      <div class="sw"><div class="chip" style="background:#efa63c"></div><div class="cap"><span class="nm">amber</span><span class="hex">#EFA63C</span></div></div>
+      <div class="sw"><div class="chip" style="background:#f2685f"></div><div class="cap"><span class="nm">coral</span><span class="hex">#F2685F</span></div></div>
+      <div class="sw"><div class="chip" style="background:#8b6ff2"></div><div class="cap"><span class="nm">purple</span><span class="hex">#8B6FF2</span></div></div>
+      <div class="sw"><div class="chip" style="background:#e8ebf2"></div><div class="cap"><span class="nm">line</span><span class="hex">#E8EBF2</span></div></div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-label">Typography</div>
+    <div class="type-card">
+      <div class="type-row">
+        <span class="k">Poppins / Zen Maru Gothic — Display</span>
+        <span class="t-display">見出しは丸ゴシックで親しみやすく</span>
+      </div>
+      <div class="type-row">
+        <span class="k">Poppins 600 — Heading</span>
+        <span class="t-head">セクション見出し・カードタイトル</span>
+      </div>
+      <div class="type-row">
+        <span class="k">Zen Kaku Gothic New — Body</span>
+        <span class="t-body">生成された記事の本文や説明文はゴシック体で組み、行間を広めにとって読みやすさを確保します。</span>
+      </div>
+      <div class="type-row">
+        <span class="k">Zen Kaku Gothic New — Caption / Meta</span>
+        <span class="t-cap">蓄積ログ 42 件　·　スコア 88 / 100</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-label">Buttons</div>
+    <div class="row">
+      <button class="btn btn-primary">記事を生成</button>
+      <button class="btn btn-ghost">保存</button>
+      <button class="btn btn-adopt"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8l3 3 6-6.5"/></svg>採用</button>
+      <button class="btn btn-reject"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l8 8M12 4l-8 8"/></svg>ボツ</button>
+      <button class="btn btn-disabled">生成中…</button>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-label">Form controls</div>
+    <div class="fgrid">
+      <div><span class="label">テキスト入力</span><div class="field">在宅ワークで集中力を保つ方法</div></div>
+      <div><span class="label">プレースホルダー</span><div class="field ph">例: Python 入門ガイド</div></div>
+      <div><span class="label">フォーカス</span><div class="field focus">入力中のフィールド</div></div>
+      <div><span class="label">セレクト</span><div class="field select">フレンドリー<svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 6l4.5 4.5L12.5 6"/></svg></div></div>
+      <div><span class="label">テキストエリア</span><div class="field area">追加の指示・補足…</div></div>
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <span class="label" style="margin:0">チェックボックス / セグメント</span>
+        <label class="check"><span class="box on"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8l3 3 6-6.5"/></svg></span>Few-Shot RAG を使う</label>
+        <label class="check"><span class="box"></span>使わない</label>
+        <div class="seg"><b>0</b><b class="on">1</b><b>2</b><b>3</b></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-label">Navigation — default / hover / active</div>
+    <div class="navset">
+      <div class="nav-item"><span class="ic"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1.5" y="3" width="13" height="10" rx="2"/><path d="M2 4l6 4.5L14 4"/></svg></span><span class="lb">メール返信作成</span></div>
+      <div class="nav-item hover"><span class="ic"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h12M2 8h8M2 12h12"/></svg></span><span class="lb">文章要約</span></div>
+      <div class="nav-item is-active"><span class="ic"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2.5l3.5 3.5-7.5 7.5H2.5v-3.5z"/><path d="M8.5 4l3.5 3.5"/></svg></span><span class="lb">ブログ記事作成</span></div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-label">Guardrail &amp; pipeline</div>
+    <div class="row" style="align-items:flex-start;gap:40px">
+      <div class="badge-ok"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6"/><path d="M5.2 8.2l2 2 3.8-4.4"/></svg>ガードレール合格 · 88 / 100</div>
+      <div>
+        <div class="badge-warn"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2.5l6 11H2z"/><path d="M8 7v3.2"/><path d="M8 12.2v.2"/></svg>ガードレール未達 · 52 / 100</div>
+        <div class="vlist">・ 100字を超える長文が2文<br>・ 常套句「〜と言えるでしょう」を3回使用<br>・ 具体例・体験談的な描写が見当たらない</div>
+      </div>
+    </div>
+    <div class="stepper">
+      <div class="step"><span class="sn">1</span>構成・共感設計</div>
+      <div class="sep"></div>
+      <div class="step"><span class="sn">2</span>初稿作成</div>
+      <div class="sep"></div>
+      <div class="step todo"><span class="sn">3</span>脱 AI 校正</div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-label">Cards &amp; elevation</div>
+    <div class="card-demo">
+      <div class="mini" style="box-shadow:var(--shadow-sm)"><h5>shadow-sm</h5><p>ナビ・チップ・小カード</p></div>
+      <div class="mini"><h5>shadow-md</h5><p>フォーム・結果・記事カード</p></div>
+      <div class="mini" style="border:1px solid var(--line);box-shadow:none;background:var(--soft)"><h5>flat</h5><p>フィードバック欄など従属的な面</p></div>
+    </div>
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

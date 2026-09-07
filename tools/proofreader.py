@@ -14,7 +14,7 @@ MODES = {
 
 
 def render():
-    st.header("🔍 文章校正・改善")
+    st.header(":material/edit_note: 文章校正・改善")
     st.caption("文章の誤字脱字チェックから、文体の改善まで対応します")
 
     text = st.text_area(
@@ -87,6 +87,6 @@ def render():
                 use_container_width=True,
             )
         with col_save:
-            if st.button("💾 保存", use_container_width=True):
+            if st.button("保存", icon=":material/save:", use_container_width=True):
                 history_utils.save_entry("文章校正・改善", saved["title"], result)
                 st.success("保存しました！")
