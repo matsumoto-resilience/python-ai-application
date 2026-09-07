@@ -1,8 +1,9 @@
 from __future__ import annotations
 import json
 import uuid
-from datetime import datetime
 from pathlib import Path
+
+from utils.clock import now_iso
 
 _HISTORY_FILE = Path(__file__).parent.parent / "data" / "history.json"
 
@@ -23,7 +24,7 @@ def save_entry(tool: str, title: str, content: str) -> None:
         "tool": tool,
         "title": title,
         "content": content,
-        "created_at": datetime.now().isoformat(timespec="seconds"),
+        "created_at": now_iso(),
     })
     _HISTORY_FILE.parent.mkdir(exist_ok=True)
     _HISTORY_FILE.write_text(

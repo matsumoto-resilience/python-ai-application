@@ -8,10 +8,10 @@ from __future__ import annotations
 
 import json
 from collections import Counter
-from datetime import datetime
 from pathlib import Path
 
 from utils import history as history_utils
+from utils.clock import now_iso
 from utils.feedback import load_feedback
 
 _GEN_LOG = Path(__file__).parent.parent / "logs" / "generations.jsonl"
@@ -27,7 +27,7 @@ def log_generation(
 ) -> None:
     _GEN_LOG.parent.mkdir(exist_ok=True)
     record = {
-        "timestamp": datetime.now().isoformat(timespec="seconds"),
+        "timestamp": now_iso(),
         "tool": tool,
         "title": title,
         "score": int(score),

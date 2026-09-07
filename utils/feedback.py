@@ -3,8 +3,9 @@ from __future__ import annotations
 import difflib
 import json
 import uuid
-from datetime import datetime
 from pathlib import Path
+
+from utils.clock import now_iso
 
 _LOG_FILE = Path(__file__).parent.parent / "logs" / "feedback.jsonl"
 
@@ -46,7 +47,7 @@ def save_feedback(
     """編集差分 / 採否フィードバックを logs/feedback.jsonl に追記する。"""
     record = {
         "id": uuid.uuid4().hex,
-        "timestamp": datetime.now().isoformat(timespec="seconds"),
+        "timestamp": now_iso(),
         "original_output": original_output,
         "user_edited_output": user_edited_output,
         "feedback_score": int(feedback_score),
